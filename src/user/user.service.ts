@@ -46,4 +46,24 @@ export class UserService {
     if(!user) throw new BadRequestException({message:'user not found'});
     return await this.userRepository.remove(user)
   }
+  
+  async getUserOpts(userId: number): Promise<User>{
+    console.log(userId);
+    const userOtps = await this.userRepository.findOne({where:{
+          id: userId
+        },
+      relations:{
+    otp: true
+  }})
+console.log(userOtps)
+return userOtps!
+  }
+
+  async deleteOtps(){
+    
+  }
+
+  async addUserOtp(){
+
+  }
 }

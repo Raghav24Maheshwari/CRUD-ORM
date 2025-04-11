@@ -1,10 +1,11 @@
 /* eslint-disable prettier/prettier */
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { UserOtp } from "./user-otp.entity";
 
 @Entity()
 export class User {
     @PrimaryGeneratedColumn()
-    id:number;
+    id: number;
 
     @Column()
     firstName:string;
@@ -14,4 +15,10 @@ export class User {
 
     @Column({unique:true})
     email:string;
+
+    @OneToMany(() => UserOtp, (a) => {
+        console.log(a);
+        return a.user;
+    })
+    public otp?: UserOtp[];
 }

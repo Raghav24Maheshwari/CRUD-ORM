@@ -52,4 +52,13 @@ export class UserController {
       message:'user delete successfully.'
     }
   }
+
+  @Get(':id/otps')
+  async getAllUserOtps(@Param('id') id: number){
+await this.userService.getUserOpts(id);
+return {
+  success: true,
+  maessage: 'successfully'
+}
+  }
 }

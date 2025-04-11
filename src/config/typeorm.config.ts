@@ -11,8 +11,8 @@ export const typeOrmConfig: DataSourceOptions = {
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
-entities: [__dirname + '/../user/entities/*.{ts,js}'],
-migrations: [__dirname + '/../migrations/*.{ts,js}'],
+entities: [__dirname + '/../user/entities/*'],
+migrations: [__dirname + '/../user/migrations/*'],
 
   synchronize: false,
   logging: true,
