@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -14,15 +14,35 @@ export class UserController {
    return {message: 'User created successfully'}
   }
 
-  @Get()
-  async findAll() {
-    const user = await  this.userService.findAll();
+  @Get('/admin')
+  async findAllForAdmin() {
+    const user = await  this.userService.findAllForAdmin();
     return {
       success:true,
       user,
       message:'user read successfully.'
     }
   }
+
+  @Get()
+  @Get()
+  async findAll(
+    @Query('page') page = 1,
+    @Query('limit') limit = 5,
+    @Query('firstName') firstName?: string,
+    @Query('lastName') lastName?: string,
+    @Query('email') email?: string
+  ) {
+    const filters = { firstName, lastName, email };
+    const result = await this.userService.findAll(+page, +limit, filters);
+    return {
+      success: true,
+      ...result,
+      message: 'Users fetched successfully.'
+    };
+  }
+  
+
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
